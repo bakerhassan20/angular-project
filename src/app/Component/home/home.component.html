@@ -1,0 +1,8 @@
+<h1>{{storeInfo.name}}</h1>
+<img [src]="storeInfo.img">
+
+<ul>
+  <li *ngFor="let itemx of storeInfo.branches">
+    {{ itemx }}
+  </li>
+</ul>

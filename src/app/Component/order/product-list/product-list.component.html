@@ -1,0 +1,50 @@
+
+
+<div class="text-secondary">
+
+</div>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">name</th>
+      <th scope="col">price</th>
+      <th scope="col">quantity</th>
+      <th scope="col">img</th>
+      <th scope="col">cateID</th>
+      <th scope="col">count</th>
+      <th scope="col">details</th>
+      <th scope="col">add</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let product of productListCat; let i = index;">
+      <th scope="row">{{ i + 1}}</th>
+      <td>{{ product?.name }}</td>
+      <td>{{ product?.price | currency : 'USD':'symbol' }}</td>
+      <td>
+        <div *ngIf="product.quantity != 0; else outOfStock">{{ product?.quantity }}</div>
+        <ng-template #outOfStock class="text-danger">Out Of Stock</ng-template >
+      </td>
+      <td><img src="{{ product.img }}" width="70px" height="50px"></td>
+      <td>{{ product?.cateId }}</td>
+      <td><input #itemCount type="number" class="form-control" name=""placeholder=""></td>
+      <td>
+        <button type="button"
+                class="btn btn-primary"
+               [routerLink]="['/Products/',product.id]">
+                details
+        </button>
+      </td>
+      <td>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="openProDetails(product.id)">
+                add
+        </button>
+      </td>
+    </tr>
+     
+  </tbody>
+</table>

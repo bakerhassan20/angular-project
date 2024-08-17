@@ -1,0 +1,57 @@
+
+<div class="form-group p-4">
+  <label for="" class="p-2">category</label>
+  <select  class="form-control"  name="cat" id="proCat" [(ngModel)]="selectedCatID">
+    <option *ngFor="let cat of catList" value="{{ cat.id }}">{{cat.name}}</option>
+  </select>
+</div><br>
+
+
+<app-product-list [sentCatID]="selectedCatID"  (TotalPriceChangeEvent)="OnTotalPriceChange($event)"
+(ProductCartEvent)="OnBuyNewProduct($event)"></app-product-list>
+
+<h3>Order Total Price : {{RevivedOrderTotalPrice}}</h3>
+
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">name</th>
+      <th scope="col">price</th>
+      <th scope="col">img</th>
+      <th scope="col">cateID</th>
+      <th scope="col">count</th>
+      <th scope="col">buy</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let product of productCartList; let i = index;">
+      <th scope="row">{{ i + 1}}</th>
+      <td>{{ product?.name }}</td>
+      <td>{{ product?.price | currency : 'USD':'symbol' }}</td>
+      <td>
+        <div *ngIf="product.quantity != 0; else outOfStock">{{ product?.quantity }}</div>
+        <ng-template #outOfStock class="text-danger">Out Of Stock</ng-template >
+      </td>
+      <td><img src="{{ product.img }}" width="70px" height="50px"></td>
+      <td>{{ product?.cateId }}</td>
+      <td><input #itemCount type="number" value="{{ product.count }}" class="form-control" name=""placeholder=""></td>
+      <td>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="OnRemoveProduct(product.id)">
+                Removed
+        </button>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+<div>
+  <h3>Enter Your Name:</h3>
+  <input type="text" #clintNameInput class="form-control">
+</div>
